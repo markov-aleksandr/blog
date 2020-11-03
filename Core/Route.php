@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use function Composer\Autoload\includeFile;
+
 class Route
 {
     public $controllerName;
@@ -20,6 +22,12 @@ class Route
             $actionName = $routes[2];
         }
 
+        if ($controllerName == 'public' and $actionName == 'css') {
+        header('Location: http:/blog.com:8080/public/css/blog-style.css');
+//            include 'public/css/blog-style.css';
+        }
+
+
         $modelName = ucfirst($controllerName) . 'Model';
         $controllerName = ucfirst($controllerName) . 'Controller';
         $actionName = 'action' . ucfirst($actionName);
@@ -33,10 +41,10 @@ class Route
 
         $controllerFile = ($controllerName) . '.php';
         $controllerPath = '../Application/Controllers/' . $controllerFile;
-        if (file_exists($controllerPath)) {
+        if (file_exists($controllerPath) or $controllerName == 'public') {
             include '../Application/Controllers/' . $controllerFile;
         } else {
-            Route::ErrorPage404();
+            Route::errorPage404();
         }
         $controllerName = "Application\Controllers\\" . $controllerName;
         $controller = new $controllerName;
@@ -45,11 +53,11 @@ class Route
         if (method_exists($controller, $action)) {
             $controller->$action();
         } else {
-            Route::ErrorPage404();
+            Route::errorPage404();
         }
     }
 
-    public static function ErrorPage404()
+    public static function errorPage404()
     {
         $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
         header('HTTP/1.1 404 Not Found');
