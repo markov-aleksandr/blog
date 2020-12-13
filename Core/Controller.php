@@ -14,8 +14,4 @@ class Controller
         $this->view = new View();
     }
 
-    public function action_index()
-    {
-
-    }
 }
