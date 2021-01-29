@@ -20,9 +20,25 @@ class SignController extends Controller
         $this->view->generate('sign-view.php');
     }
 
-    public function actionUp()
+    public function actionLogin()
     {
-        $this->model->registration($_POST['login'],$_POST['email'], $_POST['password']);
+
+
+        $this->view->generate('login-view.php');
+    }
+
+    public function actionRegistration()
+    {
+        $this->model->registration($_POST['login'], $_POST['email'], $_POST['password']);
+    }
+
+    public function actionAutorization()
+    {
+        if (!$this->model->login($_POST['email'], $_POST['password'])) {
+            var_dump($_SESSION);
+            $_SESSION['userEmail'] = 'derzj@g.com';
+            var_dump(isset($_SESSION['userEmail']));
+        }
 
     }
 }

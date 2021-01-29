@@ -22,11 +22,6 @@ class Route
             $actionName = $routes[2];
         }
 
-        if ($controllerName == 'public' and $actionName == 'css') {
-        header('Location: http:/blog.com:8080/public/css/blog-style.css');
-//            include 'public/css/blog-style.css';
-        }
-
 
         $modelName = ucfirst($controllerName) . 'Model';
         $controllerName = ucfirst($controllerName) . 'Controller';

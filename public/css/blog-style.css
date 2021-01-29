@@ -118,3 +118,8 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 42em;
 }
 
+.article{
+    height: 50px;
+    width: 100%;
+    background-color: brown;
+}

@@ -1,12 +1,21 @@
-<?php foreach ($data as $item): ?>
+<a href="/">Back to main</a>
+<div class="container">
+    <?php foreach ($data as $item): ?>
 
-    <h1><?=$item['title']?></h1>
-    <p><?=$item['text']?></p>
+        <h1 style="text-align: center"><?= $item['title'] ?></h1>
+        <p><?= $item['text'] ?></p>
 
-<?php endforeach;?>
+    <?php endforeach; ?>
+    <h3>Коментарии: </h3>
+    <div class="create_comments">
+        <textarea name="article" class="form-control"></textarea>
+    </div>
 
-<?php
-var_dump($_SERVER);
-var_dump($_GET);
-var_dump($_ENV);
-var_dump($_REQUEST);
+    <div class="comments">
+        <p>коментарии</p>
+        <p>коментарии</p>
+        <p>коментарии</p>
+        <p>коментарии</p>
+    </div>
+</div>
+

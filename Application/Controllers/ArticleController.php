@@ -32,20 +32,8 @@ class ArticleController extends Controller
     public function actionView()
     {
         $id = explode('/', $_SERVER['REQUEST_URI']);
-        if (!empty($id['4'])) {
-            $this->view->generate('article-view.php', 'templateView.php', $this->model->getArticleId($id['4']));
-        } else {
-            $this->view->generate('userArticle-view.php', 'templateView.php', $this->model->getArticleUserId($id['3']));
-        }
+        $this->view->generate('article-view.php', 'templateView.php', $this->model->getArticleId($id['3']));
+
 
     }
-
-    public function actionDelete()
-    {
-        $id = explode('/', $_SERVER['REQUEST_URI']);
-        $this->model->deleteArticle($id['4']);
-        header('Location: /');
-    }
-
-
 }

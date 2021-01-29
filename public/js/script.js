@@ -18,3 +18,24 @@
             }, false)
         })
 })()
+
+function sendAjaxFormRegistration() {
+    let email = $('input[name="email"]').val();
+    let password = $('input[name="password"]').val();
+    let login = $('input[name="login"]').val();
+    $.ajax({
+        url: '/sign/up',
+        type: "POST",
+        data: {email: email, password: password, login: login},
+        success: function (data) {
+            if (data === '1') {
+                window.location = '/';
+            } else {
+                $('#result_form').html(data);
+            }
+        },
+        error: function (data) {
+            $('#result_form').html('Ошибка. Данные не отправлены.');
+        }
+    });
+}

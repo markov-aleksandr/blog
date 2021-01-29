@@ -48,9 +48,6 @@ class ArticleModel extends Model
         $deletePost = $this->dataConnect->prepare('DELETE FROM articles WHERE id = :id');
         $deletePost->bindParam(':id', $id);
         $deletePost->execute();
-        $deb = $deletePost->execute();
-        var_dump($deb);
-
     }
 
 }
