@@ -25,9 +25,14 @@ class ArticleController extends Controller
         }
 
     }
+//    public function actionCreate()
+//    {
+//        $this->view->generate('create-view.php');
+//    }
 
     public function actionCreate()
     {
+        var_dump($_SESSION);
         if (!isset($_SESSION['id'])) {
             header('Location: /');
         } else {
@@ -39,7 +44,7 @@ class ArticleController extends Controller
     public function actionView()
     {
         $id = explode('/', $_SERVER['REQUEST_URI']);
-        $this->view->generate('article-view.php', 'templateView.php', $this->model->getArticleId($id['3']));
+        $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getArticleUserId());
 
 
     }

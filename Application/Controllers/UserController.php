@@ -7,7 +7,7 @@ namespace Application\Controllers;
 use Application\Models\UserModel;
 use Core\Controller;
 
-class SignController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
@@ -22,8 +22,6 @@ class SignController extends Controller
 
     public function actionLogin()
     {
-
-
         $this->view->generate('login-view.php');
     }
 
@@ -35,7 +33,15 @@ class SignController extends Controller
     public function actionAutorization()
     {
 //      if ($this->model->login($_POST['email'], $_POST['password'])){
-          $response = $this->model->login($_POST['email'], $_POST['password']);
-          echo $response;
-      }
+        $response = $this->model->login($_POST['email'], $_POST['password']);
+        echo $response;
+    }
+
+    public function actionLogout ()
+    {
+        unset($_SESSION['session_username']);
+        session_destroy();
+        header("location: /");
+    }
+
 }

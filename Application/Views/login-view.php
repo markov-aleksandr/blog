@@ -4,7 +4,7 @@
         <h2>Войти</h2>
     </div>
     <h4 class="mb-4 text-center">Добро пожаловать:)</h4>
-    <form class="needs-validation" action="/sign/autorization" method="post">
+    <form class="needs-validation" action="/user/autorization" method="post">
         <!--            <div class="row g-3">-->
         <div class="col-12">
             <label for="login" class="form-label">Введите email</label>

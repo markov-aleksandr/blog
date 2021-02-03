@@ -3,7 +3,7 @@
         <h2>Зарегестрироваться</h2>
     </div>
     <h4 class="mb-4 text-center">Чтобы комфортнее пользоваться ресурсом, вы можете зарегистрироваться</h4>
-    <form class="needs-validation" action="/sign/registration" method="post">
+    <form class="needs-validation" action="/user/registration" method="post">
         <!--            <div class="row g-3">-->
         <div class="col-12">
             <label for="login" class="form-label">Введите логин</label>

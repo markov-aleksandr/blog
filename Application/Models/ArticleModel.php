@@ -25,10 +25,10 @@ class ArticleModel extends Model
 
     }
 
-    public function getArticleUserId($id)
+    public function getArticleUserId()
     {
         $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE user_id = :id');
-        $getArticles->bindParam(':id', $id);
+        $getArticles->bindParam(':id', $_SESSION['id']);
         $getArticles->execute();
         $data = $getArticles->fetchAll();
         return $data;

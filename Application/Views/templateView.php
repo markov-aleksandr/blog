@@ -8,7 +8,8 @@
     <meta name="generator" content="Hugo 0.79.0">
     <title>Blog Template · Bootstrap v5.0</title>
     <!-- Bootstrap core CSS -->
-    <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -38,7 +39,8 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="/css/blog-style.css" rel="stylesheet">
 </head>
@@ -62,15 +64,24 @@
                         <path d="M21 21l-5.2-5.2"/>
                     </svg>
                 </a>
-                <a class="btn btn-sm btn-outline-secondary" href="/sign">Sign up</a>
+                <?php if (!isset($_SESSION['id'])): ?>
+                    <a class="btn btn-sm btn-outline-primary" href="/user">Sign up</a>
+                    <a class="btn btn-sm btn-outline-success" href="/user/login">Log in</a>
+                <?php else: ?>
+                    <a class="btn btn-sm btn-outline-secondary" href="/user/logout">Log out</a>
+                <?php endif; ?>
             </div>
         </div>
     </header>
 
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
-            <a class="p-2 link-secondary" href="/article">Создать</a>
-<!--            <a class="p-2 link-secondary" href="/"></a>-->
+            <?php if (isset($_SESSION['id'])): ?>
+                <a class="p-2 link-secondary" href="/article">Создать</a>
+            <?php else: ?>
+                <a class="p-2 link-secondary" href="#">Дайджест недели</a>
+            <?php endif; ?>
+            <!--            <a class="p-2 link-secondary" href="/"></a>-->
         </nav>
     </div>
 </div>
@@ -79,7 +90,9 @@
     <?php include '../Application/Views/' . $contentView; ?>
 </div>
 <script src="/js/script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 </html>
 

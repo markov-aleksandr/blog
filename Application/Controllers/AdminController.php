@@ -16,5 +16,8 @@ class AdminController extends Controller
         $this->model = new AdminModel();
     }
 
-
+    public function actionIndex()
+    {
+        $this->view->generate('admin-view.php');
+    }
 }

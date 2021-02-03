@@ -5,7 +5,7 @@ namespace Application\Controllers;
 use Application\Models\MainModel;
 use Core\Controller;
 
-class MainController extends Controller
+class HomeController extends Controller
 {
     public function __construct()
     {

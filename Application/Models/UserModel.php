@@ -43,7 +43,7 @@ class UserModel extends Model
                 $userInfo = $userInfo->fetchAll(PDO::FETCH_ASSOC);
                 if (password_verify($password, $userInfo[0]['password'])) {
                     $_SESSION['id'] = $userInfo[0]['id'];
-                    header('Location: /admin');
+                    header('Location: /article/view');
                 } else {
                     $error = 'Вы ввели не правильный пароль';
                     return $error;
