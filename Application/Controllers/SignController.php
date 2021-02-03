@@ -4,7 +4,7 @@
 namespace Application\Controllers;
 
 
-use Application\Models\SignModel;
+use Application\Models\UserModel;
 use Core\Controller;
 
 class SignController extends Controller
@@ -12,7 +12,7 @@ class SignController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->model = new SignModel();
+        $this->model = new UserModel();
     }
 
     public function actionIndex()
@@ -34,7 +34,8 @@ class SignController extends Controller
 
     public function actionAutorization()
     {
-
-
-    }
+//      if ($this->model->login($_POST['email'], $_POST['password'])){
+          $response = $this->model->login($_POST['email'], $_POST['password']);
+          echo $response;
+      }
 }

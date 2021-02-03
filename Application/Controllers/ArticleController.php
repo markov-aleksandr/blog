@@ -17,16 +17,21 @@ class ArticleController extends Controller
 
     public function actionIndex()
     {
-        $this->view->generate("create-view.php");
+        if (!isset($_SESSION['id'])) {
+            header('Location: /');
+        } else {
+            $this->view->generate("create-view.php");
+        }
 
     }
 
     public function actionCreate()
     {
-        $this->model->createArticle($_POST['title'], $_POST['article']);
-        var_dump($_POST);
-        die();
-        header('Location: /');
+        if (!isset($_SESSION['id'])) {
+            header('Location: /');
+        } else {
+            $this->model->createArticle($_POST['title'], $_POST['article']);
+        }
     }
 
     public function actionView()

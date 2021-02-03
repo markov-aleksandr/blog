@@ -3,9 +3,11 @@
 namespace Application\Models;
 
 use Core\Model;
+use PDO;
 
-class SignModel extends Model
+class UserModel extends Model
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -31,16 +33,25 @@ class SignModel extends Model
     public function login($email, $password)
     {
         if (!empty($email) && !empty($password)) {
-            $userInforamtion= $this->dataConnect->prepare('SELECT * FROM users WHERE email=:email');
-            $userInforamtion->bindParam(":email", $email);
-            $userInforamtion->execute();
-            $userInforamtion = $userInforamtion->fetchAll();
-            $password = password_verify($_POST['password'], $userInforamtion[0]['password']);
-            var_dump($userInforamtion[0]['password']);
-            var_dump($password);
-        } else {
-            return false;
+            $existenceUser = $this->dataConnect->prepare('SELECT COUNT(*) FROM users WHERE email=:email');
+            $existenceUser->bindParam(":email", $email);
+            $existenceUser->execute();
+            if ($existenceUser->fetchColumn() != 0) {
+                $userInfo = $this->dataConnect->prepare('SELECT * FROM users WHERE email=:email');
+                $userInfo->bindParam(":email", $email);
+                $userInfo->execute();
+                $userInfo = $userInfo->fetchAll(PDO::FETCH_ASSOC);
+                if (password_verify($password, $userInfo[0]['password'])) {
+                    $_SESSION['id'] = $userInfo[0]['id'];
+                    header('Location: /admin');
+                } else {
+                    $error = 'Вы ввели не правильный пароль';
+                    return $error;
+                }
+            } else {
+                $error = 'Такого пользователя нет.';
+                return $error;
+            }
         }
     }
-
 }
