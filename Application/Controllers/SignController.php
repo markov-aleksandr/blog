@@ -34,11 +34,7 @@ class SignController extends Controller
 
     public function actionAutorization()
     {
-        if (!$this->model->login($_POST['email'], $_POST['password'])) {
-            var_dump($_SESSION);
-            $_SESSION['userEmail'] = 'derzj@g.com';
-            var_dump(isset($_SESSION['userEmail']));
-        }
+
 
     }
 }

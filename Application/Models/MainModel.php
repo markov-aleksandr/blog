@@ -16,7 +16,6 @@ class MainModel extends \Core\Model
     {
         $getArticles = $this->dataConnect->query('SELECT * FROM articles');
         $data = $getArticles->fetchAll();
-         var_dump($data);
         return $data;
     }
 

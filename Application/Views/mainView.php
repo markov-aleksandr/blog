@@ -6,7 +6,6 @@
             <a class="featurette-heading" href="/article/view/<?=$key['id']?>"><?= $key['title'] ?></a>
             <p class="lead"><?= $key['text'] ?></p>
         </div>
-        і
 <!--  ADD PHOTO   -->
 <!--                <div class="col-md-5">-->
 <!--                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"-->
