@@ -20,7 +20,8 @@ class ArticleController extends Controller
         if (!isset($_SESSION['id'])) {
             header('Location: /');
         } else {
-            $this->view->generate("create-view.php");
+            $this->view->generate("create-view.php", 'templateView.php', $this->model->checkCountUserArticle());
+
         }
 
     }
@@ -31,6 +32,7 @@ class ArticleController extends Controller
             header('Location: /');
         } else {
             $this->model->createArticle($_POST['title'], $_POST['article']);
+            header('Location: /article');
         }
     }
 

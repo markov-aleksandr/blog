@@ -1,3 +1,4 @@
+
 <div class="container">
     <main>
         <form action="/article/create" method="post" class="needs-validation" novalidate>
@@ -8,14 +9,8 @@
                 <div class="col-md-5 col-lg-4 order-md-last">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
                         <span class="text-muted">Ваши статьи</span>
-                        <span class="badge bg-secondary rounded-pill"><?=$_SESSION['userId']?></span>
+                        <span class="badge bg-secondary rounded-pill"><?=$data[0]["COUNT(*)"]?></span>
                     </h4>
-                    <div class="article"></div>
-                    <div class="article"></div>
-                    <div class="article"></div>
-                    <div class="article"></div>
-                    <div class="article"></div>
-                    <div class="article"></div>
 
                 </div>
                 <div class="col-md-7 col-lg-8">

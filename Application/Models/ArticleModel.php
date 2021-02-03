@@ -17,7 +17,7 @@ class ArticleModel extends Model
     {
         if (!empty($title) and !empty($article)) {
             $create = $this->dataConnect->prepare('INSERT INTO articles (`user_id`, `title`, `text`) VALUES (:user_id, :title, :article)');
-            $create->bindValue(':user_id', 1);
+            $create->bindValue(':user_id', $_SESSION['id']);
             $create->bindParam(':title', $title);
             $create->bindParam(':article', $article);
             $create->execute();
@@ -50,4 +50,11 @@ class ArticleModel extends Model
         $deletePost->execute();
     }
 
+    public function checkCountUserArticle()
+    {
+        $countUserArticle = $this->dataConnect->prepare('SELECT COUNT(*) FROM articles WHERE user_id = :id');
+        $countUserArticle->bindParam(':id', $_SESSION['id']);
+        $countUserArticle->execute();
+        return $countUserArticle->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
