@@ -21,14 +21,8 @@ class ArticleController extends Controller
             header('Location: /');
         } else {
             $this->view->generate("create-view.php", 'templateView.php', $this->model->checkCountUserArticle());
-
         }
-
     }
-//    public function actionCreate()
-//    {
-//        $this->view->generate('create-view.php');
-//    }
 
     public function actionCreate()
     {
@@ -41,11 +35,22 @@ class ArticleController extends Controller
         }
     }
 
-    public function actionView()
+    public function actionUserView()
     {
         $id = explode('/', $_SERVER['REQUEST_URI']);
         $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getArticleUserId());
+    }
 
+    public function actionPost()
+    {
+        $id = explode('/', $_SERVER['REQUEST_URI']);
+        $this->view->generate('article-view.php', 'templateView.php',  $this->model->getArticleId($id[3]));
+    }
 
+    public function actionComment()
+    {
+        $id = explode('/', $_SERVER['REQUEST_URI']);
+        $this->model->createComment($id[3], $_POST['comment'], null);
+        header("Location: /article/post/{$id[3]}");
     }
 }

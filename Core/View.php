@@ -8,4 +8,5 @@ class View
     {
         include '../Application/Views/' . $templateView;
     }
+
 }

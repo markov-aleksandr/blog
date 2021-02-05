@@ -34,13 +34,13 @@ class ArticleModel extends Model
         return $data;
     }
 
-    public function getArticleId($id)
+    public function getArticleId(int $id)
     {
         $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE id = :id');
         $getArticles->bindParam(':id', $id);
         $getArticles->execute();
-        $data = $getArticles->fetchAll();
-        return $data;
+        $articles = $getArticles->fetchAll(\PDO::FETCH_ASSOC);
+        return $articles;
     }
 
     public function deleteArticle($id)
@@ -56,5 +56,25 @@ class ArticleModel extends Model
         $countUserArticle->bindParam(':id', $_SESSION['id']);
         $countUserArticle->execute();
         return $countUserArticle->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function createComment($articleId, $text, $parentId)
+    {
+        $createComment = $this->dataConnect->prepare('INSERT INTO comments(user_id, article_id, text, parent_id) VALUES (:user_id, :article_id, :text, :parent_id)');
+        $createComment->bindParam(':user_id', $_SESSION['id']);
+        $createComment->bindParam(':article_id', $articleId);
+        $createComment->bindParam(':text', $text);
+        $createComment->bindParam(':parent_id', $parentId);
+        $createComment->execute();
+//        var_dump($this->getArticleId());
+    }
+
+    public function getComments($id)
+    {
+        $selectComments = $this->dataConnect->prepare('SELECT * FROM comments WHERE article_id = :id');
+        $selectComments->bindParam(':id', $id);
+        $selectComments->execute();
+        return $selectComments->fetchAll(\PDO::FETCH_ASSOC);
+
     }
 }

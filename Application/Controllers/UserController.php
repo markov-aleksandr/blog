@@ -23,7 +23,10 @@ class UserController extends Controller
     public function actionLogin()
     {
         $this->view->generate('login-view.php');
+//        var_dump($_SESSION[]);
+        $this->model->test();
     }
+
 
     public function actionRegistration()
     {
@@ -37,11 +40,13 @@ class UserController extends Controller
         echo $response;
     }
 
-    public function actionLogout ()
+    public function actionLogout()
     {
         unset($_SESSION['session_username']);
         session_destroy();
         header("location: /");
     }
+
+
 
 }

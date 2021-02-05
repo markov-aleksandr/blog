@@ -4,13 +4,16 @@ namespace Application\Models;
 
 use Core\Model;
 use PDO;
+use Application\Models\UserTabelGateway;
 
 class UserModel extends Model
 {
-
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function test() {
     }
 
     public function registration($login, $email, $password)
@@ -43,7 +46,12 @@ class UserModel extends Model
                 $userInfo = $userInfo->fetchAll(PDO::FETCH_ASSOC);
                 if (password_verify($password, $userInfo[0]['password'])) {
                     $_SESSION['id'] = $userInfo[0]['id'];
-                    header('Location: /article/view');
+                    if ($userInfo[0]['admin'] == 1) {
+                       header('Location: /admin');
+                   } else {
+                        header('Location: /article/userView');
+                   }
+
                 } else {
                     $error = 'Вы ввели не правильный пароль';
                     return $error;
