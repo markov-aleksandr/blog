@@ -17,6 +17,7 @@ class SignController extends Controller
 
     public function actionIndex()
     {
+        var_dump($this->model->test());
         $this->view->generate('sign-view.php');
     }
 

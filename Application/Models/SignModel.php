@@ -6,9 +6,17 @@ use Core\Model;
 
 class SignModel extends Model
 {
+    public $data;
+
     public function __construct()
     {
         parent::__construct();
+        $this->data = new PostData();
+    }
+
+    public function test()
+    {
+        return $this->data->testData();
     }
 
     public function registration($login, $email, $password)
@@ -31,7 +39,7 @@ class SignModel extends Model
     public function login($email, $password)
     {
         if (!empty($email) && !empty($password)) {
-            $userInforamtion= $this->dataConnect->prepare('SELECT * FROM users WHERE email=:email');
+            $userInforamtion = $this->dataConnect->prepare('SELECT * FROM users WHERE email=:email');
             $userInforamtion->bindParam(":email", $email);
             $userInforamtion->execute();
             $userInforamtion = $userInforamtion->fetchAll();
