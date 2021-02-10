@@ -9,6 +9,7 @@ use Core\Controller;
 
 class ArticleController extends Controller
 {
+    public $params;
     public function __construct()
     {
         parent::__construct();

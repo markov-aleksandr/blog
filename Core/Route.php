@@ -22,7 +22,6 @@ class Route
             $actionName = $routes[2];
         }
 
-
         $modelName = ucfirst($controllerName) . 'Model';
         $controllerName = ucfirst($controllerName) . 'Controller';
         $actionName = 'action' . ucfirst($actionName);

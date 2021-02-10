@@ -7,6 +7,7 @@ namespace Application\Models;
 class MainModel extends \Core\Model
 {
     public $data;
+
     public function __construct()
     {
         parent::__construct();
@@ -16,7 +17,7 @@ class MainModel extends \Core\Model
     {
         $getArticles = $this->dataConnect->query('SELECT * FROM articles');
         $data = $getArticles->fetchAll();
-         var_dump($data);
+        var_dump($data);
         return $data;
     }
 
