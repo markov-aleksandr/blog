@@ -3,7 +3,6 @@
 
 namespace Application\Controllers;
 
-
 use Application\Models\UserModel;
 use Core\Controller;
 
