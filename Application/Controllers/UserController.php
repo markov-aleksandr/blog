@@ -22,14 +22,11 @@ class UserController extends Controller
     public function actionLogin()
     {
         $this->view->generate('login-view.php');
-//        var_dump($_SESSION[]);
-        $this->model->test();
     }
-
 
     public function actionRegistration()
     {
-        $this->model->registration($_POST['login'], $_POST['email'], $_POST['password']);
+        $this->model->signup($_POST['login'], $_POST['email'], $_POST['password']);
     }
 
     public function actionAutorization()

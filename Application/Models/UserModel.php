@@ -4,7 +4,6 @@ namespace Application\Models;
 
 use Core\Model;
 use PDO;
-use Application\Models\UserTabelGateway;
 
 class UserModel extends Model
 {
@@ -13,10 +12,7 @@ class UserModel extends Model
         parent::__construct();
     }
 
-    public function test() {
-    }
-
-    public function registration($login, $email, $password)
+    public function signup($login, $email, $password)
     {
         if (!empty($login) && !empty($email) && !empty($password)) {
             $validationEmail = $this->dataConnect->prepare('SELECT COUNT(*)FROM users WHERE email=:email');
@@ -40,7 +36,7 @@ class UserModel extends Model
             $existenceUser->bindParam(":email", $email);
             $existenceUser->execute();
             if ($existenceUser->fetchColumn() != 0) {
-                $userInfo = $this->dataConnect->prepare('SELECT * FROM users WHERE email=:email');
+                $userInfo = $this->dataConnect->prepare('SELECT * FROM `users` WHERE email=:email');
                 $userInfo->bindParam(":email", $email);
                 $userInfo->execute();
                 $userInfo = $userInfo->fetchAll(PDO::FETCH_ASSOC);
