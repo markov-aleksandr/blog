@@ -3,7 +3,14 @@
     <?php foreach ($data as $key): ?>
     <div class="row featurette">
         <div class="col-md-12"> <!-- col-md-7 if add photo-->
-            <a class="featurette-heading" href="/article/post/<?=$key['id']?>"><?= $key['title'] ?></a>
+            <a class="featurette-heading" href="/posts/<?=$key['id']?>/show"><?= $key['title'] ?></a>
+            <?php if(!isset($_SESSION)):?>
+
+            <?php else:?>
+                <ul>
+                    <li><a class="featurette-heading" href="/posts/<?=$key['id']?>/edit">Редактировать</a></li>
+                </ul>
+            <?php endif;?>
             <p class="lead"><?= $key['text'] ?></p>
         </div>
 <!--  ADD PHOTO   -->

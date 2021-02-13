@@ -13,11 +13,8 @@ class HomeController extends Controller
         $this->model = new MainModel();
     }
 
-    public function actionIndex()
+    public function index()
     {
         $this->view->generate('mainView.php', 'templateView.php', $this->model->select());
     }
-
-
-
 }

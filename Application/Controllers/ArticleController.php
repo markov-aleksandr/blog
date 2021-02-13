@@ -15,42 +15,32 @@ class ArticleController extends Controller
         $this->model = new ArticleModel();
     }
 
-    public function actionIndex()
+    public function create()
     {
         if (!isset($_SESSION['id'])) {
             header('Location: /');
         } else {
-            $this->view->generate("create-view.php", 'templateView.php', $this->model->checkCountUserArticle());
+            $this->view->generate("create-view.php", 'templateView.php');
         }
     }
 
-    public function actionCreate()
+    public function store()
     {
-        var_dump($_SESSION);
         if (!isset($_SESSION['id'])) {
             header('Location: /');
         } else {
-            $this->model->createArticle($_POST['title'], $_POST['article']);
-            header('Location: /article');
+            $this->model->store($_POST['title'], $_POST['article']);
+            header('Location: /posts/create');
         }
     }
 
-    public function actionUserView()
+    public function posts(int $id)
     {
-        $id = explode('/', $_SERVER['REQUEST_URI']);
-        $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getArticleUserId());
+        $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id));
     }
 
-    public function actionPost()
+    public function edit(int $id)
     {
-        $id = explode('/', $_SERVER['REQUEST_URI']);
-        $this->view->generate('article-view.php', 'templateView.php',  $this->model->getArticleId($id[3]));
-    }
 
-    public function actionComment()
-    {
-        $id = explode('/', $_SERVER['REQUEST_URI']);
-        $this->model->createComment($id[3], $_POST['comment'], null);
-        header("Location: /article/post/{$id[3]}");
     }
 }

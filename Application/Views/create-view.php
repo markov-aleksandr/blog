@@ -1,7 +1,7 @@
 
 <div class="container">
     <main>
-        <form action="/article/create" method="post" class="needs-validation" novalidate>
+        <form action="/posts/store" method="post" class="needs-validation" novalidate>
             <div class="py-5 text-center">
                 <h2>Добавить статью</h2>
             </div>

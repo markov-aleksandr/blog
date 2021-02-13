@@ -13,7 +13,7 @@ class ArticleModel extends Model
         parent::__construct();
     }
 
-    public function createArticle($title, $article)
+    public function store($title, $article)
     {
         if (!empty($title) and !empty($article)) {
             $create = $this->dataConnect->prepare('INSERT INTO articles (`user_id`, `title`, `text`) VALUES (:user_id, :title, :article)');
@@ -25,25 +25,15 @@ class ArticleModel extends Model
 
     }
 
-    public function getArticleUserId()
-    {
-        $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE user_id = :id');
-        $getArticles->bindParam(':id', $_SESSION['id']);
-        $getArticles->execute();
-        $data = $getArticles->fetchAll();
-        return $data;
-    }
-
-    public function getArticleId(int $id)
+    public function getPostId(int $id)
     {
         $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE id = :id');
         $getArticles->bindParam(':id', $id);
         $getArticles->execute();
-        $articles = $getArticles->fetchAll(\PDO::FETCH_ASSOC);
-        return $articles;
+        return $getArticles->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function deleteArticle($id)
+    public function deletePost($id)
     {
         $deletePost = $this->dataConnect->prepare('DELETE FROM articles WHERE id = :id');
         $deletePost->bindParam(':id', $id);
