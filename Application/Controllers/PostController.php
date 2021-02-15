@@ -4,23 +4,25 @@
 namespace Application\Controllers;
 
 
-use Application\Models\ArticleModel;
+use Application\Models\PostModel;
 use Core\Controller;
 
-class ArticleController extends Controller
+class PostController extends Controller
 {
     /**
-     * ArticleController constructor.
+     * PostController constructor.
      */
     public function __construct()
     {
         parent::__construct();
-        $this->model = new ArticleModel();
+        $this->model = new PostModel();
     }
 
-    /**
-     *
-     */
+    public function index()
+    {
+        $this->view->generate('mainView.php', 'templateView.php', $this->model->index());
+    }
+
     public function create()
     {
         if (!isset($_SESSION['id'])) {
@@ -30,9 +32,6 @@ class ArticleController extends Controller
         }
     }
 
-    /**
-     *
-     */
     public function store()
     {
         if (!isset($_SESSION['id'])) {

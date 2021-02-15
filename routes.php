@@ -1,20 +1,18 @@
 <?php
 use Phroute\Phroute\RouteCollector;
-use \Application\Controllers\HomeController;
 $router = new RouteCollector();
 
-//$router->any('/posts', \Application\Controllers\ArticleController::class);
-$router->get('/', [HomeController::class, 'index']);
+$router->get('/', [\Application\Controllers\PostController::class, 'index']);
 
-$router->get('/posts/create',[\Application\Controllers\ArticleController::class, 'create']);
-$router->get('/posts/{id:\d+}/show',[\Application\Controllers\ArticleController::class, 'posts']);
-$router->get('/posts/{id:\d+}/edit',[\Application\Controllers\ArticleController::class, 'edit']);
+$router->get('/posts/create',[\Application\Controllers\PostController::class, 'create']);
+$router->get('/posts/{id:\d+}/show',[\Application\Controllers\PostController::class, 'posts']);
+$router->get('/posts/{id:\d+}/edit',[\Application\Controllers\PostController::class, 'edit']);
 
-$router->post('/posts/{id:\d+}/comment/{parent_id:\d+}?',[\Application\Controllers\ArticleController::class, 'addComment']);
+$router->post('/posts/{id:\d+}/comment/{parent_id:\d+}?',[\Application\Controllers\PostController::class, 'addComment']);
 
-$router->post('/posts/store',[\Application\Controllers\ArticleController::class, 'store']);
-$router->post('/posts/update/{id:\d+}',[\Application\Controllers\ArticleController::class, 'update']);
-$router->get('/posts/{id:\d+}/delete',[\Application\Controllers\ArticleController::class, 'delete']);
+$router->post('/posts/store',[\Application\Controllers\PostController::class, 'store']);
+$router->post('/posts/update/{id:\d+}',[\Application\Controllers\PostController::class, 'update']);
+$router->get('/posts/{id:\d+}/delete',[\Application\Controllers\PostController::class, 'delete']);
 
 
 

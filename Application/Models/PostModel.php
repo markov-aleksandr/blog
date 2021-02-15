@@ -5,8 +5,9 @@ namespace Application\Models;
 
 
 use Core\Model;
+use PDO;
 
-class ArticleModel extends Model
+class PostModel extends Model
 {
     /**
      * ArticleModel constructor.
@@ -14,6 +15,12 @@ class ArticleModel extends Model
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function index()
+    {
+        $fetchPosts = $this->dataConnect->query('SELECT * FROM articles');
+        return $fetchPosts->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -41,7 +48,7 @@ class ArticleModel extends Model
         $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE id = :id');
         $getArticles->bindParam(':id', $id);
         $getArticles->execute();
-        return $getArticles->fetchAll(\PDO::FETCH_ASSOC);
+        return $getArticles->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -78,7 +85,7 @@ class ArticleModel extends Model
         $countUserArticle = $this->dataConnect->prepare('SELECT COUNT(*) FROM articles WHERE user_id = :id');
         $countUserArticle->bindParam(':id', $_SESSION['id']);
         $countUserArticle->execute();
-        return $countUserArticle->fetchAll(\PDO::FETCH_ASSOC);
+        return $countUserArticle->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -108,7 +115,7 @@ class ArticleModel extends Model
         $selectComments = $this->dataConnect->prepare('SELECT * FROM comments WHERE article_id = :id ORDER BY time DESC ');
         $selectComments->bindParam(':id', $id);
         $selectComments->execute();
-        return $selectComments->fetchAll(\PDO::FETCH_ASSOC);
+        return $selectComments->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
