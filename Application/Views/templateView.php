@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -68,7 +66,7 @@
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
             <?php if (isset($_SESSION['id'])): ?>
-                <a class="p-2 link-secondary" href="/article">Создать</a>
+                <a class="p-2 link-secondary" href="/posts/create">Создать</a>
             <?php else: ?>
                 <a class="p-2 link-secondary" href="#">Дайджест недели</a>
             <?php endif; ?>

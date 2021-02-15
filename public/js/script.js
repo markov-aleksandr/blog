@@ -39,3 +39,9 @@ function sendAjaxFormRegistration() {
         }
     });
 }
+
+function visibleTextArea() {
+    event.preventDefault();
+    return document.getElementById('ansComment__text').style.visibility = 'visible';
+
+}

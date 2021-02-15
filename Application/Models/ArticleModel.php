@@ -8,12 +8,19 @@ use Core\Model;
 
 class ArticleModel extends Model
 {
+    /**
+     * ArticleModel constructor.
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function store($title, $article)
+    /**
+     * @param string $title
+     * @param string $article
+     */
+    public function store(string $title, string $article)
     {
         if (!empty($title) and !empty($article)) {
             $create = $this->dataConnect->prepare('INSERT INTO articles (`user_id`, `title`, `text`) VALUES (:user_id, :title, :article)');
@@ -25,6 +32,10 @@ class ArticleModel extends Model
 
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function getPostId(int $id)
     {
         $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE id = :id');
@@ -33,13 +44,35 @@ class ArticleModel extends Model
         return $getArticles->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function deletePost($id)
+    /**
+     * @param $title
+     * @param $text
+     * @param $id
+     */
+    public function update($title, $text, $id)
+    {
+        $editPost = $this->dataConnect->prepare('UPDATE articles SET title = :title, text = :text WHERE id = :id');
+        $editPost->bindParam(':title', $title);
+        $editPost->bindParam(':text', $text);
+        $editPost->bindParam(':id', $id);
+        $editPost->execute();
+        header("Location: /posts/$id/show");
+    }
+
+    /**
+     * @param int $id
+     */
+    public function delete(int $id)
     {
         $deletePost = $this->dataConnect->prepare('DELETE FROM articles WHERE id = :id');
         $deletePost->bindParam(':id', $id);
         $deletePost->execute();
+        header("Location: /");
     }
 
+    /**
+     * @return array
+     */
     public function checkCountUserArticle()
     {
         $countUserArticle = $this->dataConnect->prepare('SELECT COUNT(*) FROM articles WHERE user_id = :id');
@@ -48,23 +81,35 @@ class ArticleModel extends Model
         return $countUserArticle->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function createComment($articleId, $text, $parentId)
+    /**
+     * @param $articleId
+     * @param $text
+     * @param null $parentId
+     */
+    public function addComment($articleId, $text, $parentId = null)
     {
-        $createComment = $this->dataConnect->prepare('INSERT INTO comments(user_id, article_id, text, parent_id) VALUES (:user_id, :article_id, :text, :parent_id)');
+        $createComment = $this->dataConnect->prepare('INSERT INTO comments(`user_id`, `article_id`, `comment_text`, `parent_id`, `time`) VALUES (:user_id, :article_id, :text, :parent_id, NOW())');
         $createComment->bindParam(':user_id', $_SESSION['id']);
         $createComment->bindParam(':article_id', $articleId);
         $createComment->bindParam(':text', $text);
         $createComment->bindParam(':parent_id', $parentId);
         $createComment->execute();
-//        var_dump($this->getArticleId());
+        var_dump($_POST);
+        header("Location: /posts/{$articleId}/show");
+
     }
 
-    public function getComments($id)
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function getPostComment(int $id)
     {
-        $selectComments = $this->dataConnect->prepare('SELECT * FROM comments WHERE article_id = :id');
+        $selectComments = $this->dataConnect->prepare('SELECT * FROM comments WHERE article_id = :id ORDER BY time DESC ');
         $selectComments->bindParam(':id', $id);
         $selectComments->execute();
         return $selectComments->fetchAll(\PDO::FETCH_ASSOC);
 
     }
+
 }

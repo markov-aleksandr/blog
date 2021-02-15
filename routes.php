@@ -10,7 +10,7 @@ $router->get('/posts/create',[\Application\Controllers\ArticleController::class,
 $router->get('/posts/{id:\d+}/show',[\Application\Controllers\ArticleController::class, 'posts']);
 $router->get('/posts/{id:\d+}/edit',[\Application\Controllers\ArticleController::class, 'edit']);
 
-$router->post('/posts/{id:\d+}/comment',[\Application\Controllers\ArticleController::class, 'addComment']);
+$router->post('/posts/{id:\d+}/comment/{parent_id:\d+}?',[\Application\Controllers\ArticleController::class, 'addComment']);
 
 $router->post('/posts/store',[\Application\Controllers\ArticleController::class, 'store']);
 $router->post('/posts/update/{id:\d+}',[\Application\Controllers\ArticleController::class, 'update']);

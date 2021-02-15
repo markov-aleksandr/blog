@@ -9,6 +9,7 @@
             <?php else:?>
                 <ul>
                     <li><a class="featurette-heading" href="/posts/<?=$key['id']?>/edit">Редактировать</a></li>
+                    <li><a class="featurette-heading" href="/posts/<?=$key['id']?>/delete">Удалить</a></li>
                 </ul>
             <?php endif;?>
             <p class="lead"><?= $key['text'] ?></p>
