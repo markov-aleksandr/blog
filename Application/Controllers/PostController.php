@@ -25,21 +25,14 @@ class PostController extends Controller
 
     public function create()
     {
-        if (!isset($_SESSION['id'])) {
-            header('Location: /');
-        } else {
-            $this->view->generate("create-view.php", 'templateView.php', $this->model->checkCountUserArticle());
-        }
+        $this->view->generate("create-view.php", 'templateView.php', $this->model->checkCountUserArticle());
     }
 
     public function store()
     {
-        if (!isset($_SESSION['id'])) {
-            header('Location: /');
-        } else {
-            $this->model->store($_POST['title'], $_POST['article']);
-            header('Location: /posts/create');
-        }
+        $title = $_POST['title'];
+        $text = $_POST['text'];
+        return $this->model->store($title, $text);
     }
 
     /**
@@ -81,5 +74,14 @@ class PostController extends Controller
     public function addComment(int $id, int $parent_id = null)
     {
         $this->model->addComment($id, $_POST['comment'], $parent_id);
+    }
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function userPosts(int $id)
+    {
+        $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getPostUserId($id));
     }
 }

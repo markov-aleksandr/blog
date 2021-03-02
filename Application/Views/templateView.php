@@ -54,7 +54,7 @@
                     </svg>
                 </a>
                 <?php if (!isset($_SESSION['id'])): ?>
-                    <a class="btn btn-sm btn-outline-primary" href="/user">Sign up</a>
+                    <a class="btn btn-sm btn-outline-primary" href="/user/join">Sign up</a>
                     <a class="btn btn-sm btn-outline-success" href="/user/login">Log in</a>
                 <?php else: ?>
                     <a class="btn btn-sm btn-outline-secondary" href="/user/logout">Log out</a>
@@ -78,10 +78,15 @@
 <div>
     <?php include '../Application/Views/' . $contentView; ?>
 </div>
-<script src="/js/script.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
+
+<script src="/js/script.js"></script>
 </body>
 </html>
 

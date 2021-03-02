@@ -12,6 +12,11 @@ class UserModel extends Model
         parent::__construct();
     }
 
+    /**
+     * @param $login
+     * @param $email
+     * @param $password
+     */
     public function signup($login, $email, $password)
     {
         if (!empty($login) && !empty($email) && !empty($password)) {
@@ -26,9 +31,16 @@ class UserModel extends Model
                 $insertRegistrationData->bindParam(':login', $login);
                 $insertRegistrationData->execute();
             }
+        } else {
+            return false;
         }
     }
 
+    /**
+     * @param $email
+     * @param $password
+     * @return string
+     */
     public function login($email, $password)
     {
         if (!empty($email) && !empty($password)) {
@@ -43,10 +55,10 @@ class UserModel extends Model
                 if (password_verify($password, $userInfo[0]['password'])) {
                     $_SESSION['id'] = $userInfo[0]['id'];
                     if ($userInfo[0]['admin'] == 1) {
-                       header('Location: /admin');
-                   } else {
-                        header('Location: /article/userView');
-                   }
+                        header("Location: /posts/user/{$_SESSION[id]}/show");
+                    } else {
+                        header("Location: /posts/user/{$_SESSION[id]}/show");
+                    }
 
                 } else {
                     $error = 'Вы ввели не правильный пароль';

@@ -1,47 +1,60 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-    'use strict'
+// $(document).ready(function () {
+//     $('#signup:button').on('click', function () {
+//         ajax();
+//     });
+//
+// });
+//
+// function ajax() {
+//     let login = $('#signup input[name="login"]').val();
+//     let email = $('#signup input[name="email"]').val();
+//     let password = $('#signup input[name="password"]').val();
+//
+//     $.ajax({
+//         url: '/user/signup',
+//         type: 'POST',
+//         data: {login: login, email: email, password: password}
+//
+//     })
+//
+// }
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    let forms = document.querySelectorAll('.needs-validation')
+// $(document).ready(function (){
+//     $('#button').on('click', function (){
+//         event.preventDefault();
+//         let title = $('input #title').val();
+//         let text = $('input #text').val();
+//         $.ajax({
+//             method: 'POST',
+//             url: '/posts/store',
+//             data: {title: title, text: text},
+//             cache: false
+//         })
+//             .done(function (){
+//
+//             })
+//         $('input.title').val('');
+//         $('input.text').val('');
+//
+//     })
+// })
 
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
 
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
+$(function () {
+    $('button').on('click', function (e) {
+        e.preventDefault();
+        let title = $('.title').val();
+        let text = $('.text').val();
+        $.ajax({
+            method: 'POST',
+            url: '/posts/store',
+            data: {title: title, text: text},
+            cache: false,
+            success: function () {
 
-function sendAjaxFormRegistration() {
-    let email = $('input[name="email"]').val();
-    let password = $('input[name="password"]').val();
-    let login = $('input[name="login"]').val();
-    $.ajax({
-        url: '/sign/up',
-        type: "POST",
-        data: {email: email, password: password, login: login},
-        success: function (data) {
-            if (data === '1') {
-                window.location = '/';
-            } else {
-                $('#result_form').html(data);
             }
-        },
-        error: function (data) {
-            $('#result_form').html('Ошибка. Данные не отправлены.');
-        }
-    });
-}
-
-function visibleTextArea() {
-    event.preventDefault();
-    return document.getElementById('ansComment__text').style.visibility = 'visible';
-
-}
+        })
+        $('.title').val('');
+        $('.text').val('');
+    })
+})

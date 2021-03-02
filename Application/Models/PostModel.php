@@ -24,19 +24,18 @@ class PostModel extends Model
     }
 
     /**
-     * @param string $title
-     * @param string $article
+     * @param $title
+     * @param $text
      */
-    public function store(string $title, string $article)
+    public function store($title, $text)
     {
-        if (!empty($title) and !empty($article)) {
+        if (!empty($title) and !empty($text)) {
             $create = $this->dataConnect->prepare('INSERT INTO articles (`user_id`, `title`, `text`) VALUES (:user_id, :title, :article)');
             $create->bindValue(':user_id', $_SESSION['id']);
             $create->bindParam(':title', $title);
-            $create->bindParam(':article', $article);
+            $create->bindParam(':article', $text);
             $create->execute();
         }
-
     }
 
     /**
@@ -46,6 +45,14 @@ class PostModel extends Model
     public function getPostId(int $id)
     {
         $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE id = :id');
+        $getArticles->bindParam(':id', $id);
+        $getArticles->execute();
+        return $getArticles->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPostUserId(int $id)
+    {
+        $getArticles = $this->dataConnect->prepare('SELECT * FROM articles WHERE user_id = :id');
         $getArticles->bindParam(':id', $id);
         $getArticles->execute();
         return $getArticles->fetchAll(PDO::FETCH_ASSOC);
