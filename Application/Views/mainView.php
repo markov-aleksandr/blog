@@ -3,10 +3,17 @@
     <?php foreach ($data as $key): ?>
     <div class="row featurette">
         <div class="col-md-12"> <!-- col-md-7 if add photo-->
-            <a class="featurette-heading" href="/article/view/<?=$key['id']?>"><?= $key['title'] ?></a>
+            <a class="featurette-heading" href="/posts/<?=$key['id']?>/show"><?= $key['title'] ?></a>
+            <?php if(!isset($_SESSION)):?>
+
+            <?php else:?>
+                <ul>
+                    <li><a class="featurette-heading" href="/posts/<?=$key['id']?>/edit">Редактировать</a></li>
+                    <li><a class="featurette-heading" href="/posts/<?=$key['id']?>/delete">Удалить</a></li>
+                </ul>
+            <?php endif;?>
             <p class="lead"><?= $key['text'] ?></p>
         </div>
-        і
 <!--  ADD PHOTO   -->
 <!--                <div class="col-md-5">-->
 <!--                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"-->
