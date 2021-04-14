@@ -23,16 +23,18 @@ class PostController extends Controller
         $this->view->generate('mainView.php', 'templateView.php', $this->model->index());
     }
 
-    public function create()
-    {
-        $this->view->generate("create-view.php", 'templateView.php', $this->model->checkCountUserArticle());
-    }
-
     public function store()
     {
         $title = $_POST['title'];
         $text = $_POST['text'];
-        return $this->model->store($title, $text);
+        return json_encode($this->model->store($title, $text));
+    }
+
+    public function create()
+    {
+        $this->view->generate("create-view.php", 'templateView.php');
+        var_dump($this->model->checkCountUserArticle()[0]['COUNT(*)']);
+
     }
 
     /**
@@ -84,4 +86,5 @@ class PostController extends Controller
     {
         $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getPostUserId($id));
     }
+
 }

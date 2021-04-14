@@ -1,11 +1,9 @@
-
 <div class="col-lg-4 container ">
     <div class="py-5 text-center">
         <h2>Войти</h2>
     </div>
     <h4 class="mb-4 text-center">Добро пожаловать:)</h4>
     <form class="needs-validation" action="/user/authorize" method="post">
-        <!--            <div class="row g-3">-->
         <div class="col-12">
             <label for="login" class="form-label">Введите email</label>
             <input name="email" type="text" class="form-control" id="email" required>

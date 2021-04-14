@@ -10,7 +10,7 @@
                         <span class="text-muted">Ваши статьи</span>
                         <span class="badge bg-secondary rounded-pill count"><?= $data[0]["COUNT(*)"] ?></span>
                     </h4>
-<!--       блок статей             -->
+                    <!--       блок статей             -->
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Заполните поля ниже чтобы добавить статью</h4>
@@ -32,3 +32,7 @@
                 </div>
             </div>
     </main>
+
+    <div id="output">
+
+    </div>

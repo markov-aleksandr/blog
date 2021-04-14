@@ -3,7 +3,7 @@
     <h2 style="text-align: center"><?= $data[0]['title'] ?></h2>
     <?php //var_dump($data); ?>
     <div class="col-md-7 col-lg-8">
-        <form method="post" action="/posts/update/<?= $data[0]['id']?>" class="needs-validation" novalidate>
+        <form method="post" action="/posts/update/<?= $data[0]['id'] ?>" class="needs-validation" novalidate>
             <div class="row g-3">
                 <div class="col-sm-12">
                     <label for="title" class="form-label">Название статьи</label>

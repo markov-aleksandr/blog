@@ -35,6 +35,7 @@ class PostModel extends Model
             $create->bindParam(':title', $title);
             $create->bindParam(':article', $text);
             $create->execute();
+            return $this->checkCountUserArticle()[0]['COUNT(*)'];
         }
     }
 
@@ -100,7 +101,7 @@ class PostModel extends Model
      * @param $text
      * @param null $parentId
      */
-    public function addComment($articleId, $text, $parentId = null)
+    public function addComment($articleId, $text, $parentId = 0)
     {
         $createComment = $this->dataConnect->prepare('INSERT INTO comments(`user_id`, `article_id`, `comment_text`, `parent_id`, `time`) VALUES (:user_id, :article_id, :text, :parent_id, NOW())');
         $createComment->bindParam(':user_id', $_SESSION['id']);
@@ -108,6 +109,7 @@ class PostModel extends Model
         $createComment->bindParam(':text', $text);
         $createComment->bindParam(':parent_id', $parentId);
         $createComment->execute();
+        var_dump($createComment->debugDumpParams());
         var_dump($_POST);
         header("Location: /posts/{$articleId}/show");
 

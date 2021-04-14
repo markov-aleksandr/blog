@@ -13,7 +13,6 @@
                                     <a href="/article/view/<?=$key['user_id']?>/<?=$key['id']?>" type="button" class="btn btn-sm btn-outline-secondary">View</a>
                                     <a href="/article/delete/<?=$key['user_id']?>/<?=$key['id']?>" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                                 </div>
-                                <small class="text-muted">9 mins</small>
                             </div>
                         </div>
                     </div>
