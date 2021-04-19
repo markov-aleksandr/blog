@@ -2,37 +2,21 @@
     <?php foreach ($data as $item): ?>
         <h1 style="text-align: center"><?= $item['title'] ?></h1>
         <p><?= $item['text'] ?></p>
-
+        <input type="hidden" name="article_id" class="post_id" id="<?=$item['id']?>">
     <?php endforeach; ?>
 
-
-    <!-- --------------------------------------------Comment`s------------------------------------------------------------------>
-
-    <div class="comments">
-        <h3 class="title-comments">Комментарии (6)</h3>
-
-
-    </div>
-
-    <?php foreach ($additionalData as $value): ?>
-        <p><?= $value['comment_text']?></p>
-
-        <form method="post" action="/posts/<?= $data[0]['id']?>/comment/<?= $value['id'] ?>" id="ansComment" >
-            <textarea name="comment" class="form-control" id="ansComment__text"></textarea>
-            <button class="btn btn-secondary" id="ansComment__button">Ответить</button>
-<!--            <button type="submit" class="btn btn-secondary" >Отправить</button>-->
-            <hr>
-        </form>
- <a href="/posts/<?= $data[0]['id']?>/comment/<?= $value['id'] ?>">Ответить</a>
-    <?php endforeach; ?>
-
-    <?php if (isset($_SESSION['id'])): ?>
-    <form action="/posts/<?= $data[0]['id']?>/comment" method="post" id="comment">
-        <textarea class="form-control" name="comment"></textarea>
-        <button type="submit" class="btn btn-primary ">Отправить комментарий</button>
-
-        <?php else: ?>
-            <p>Авторизуйтесь</p>
-        <?php endif; ?>
+    <form method="post" class="form-control" id="comment_form">
+        <div class="form-group">
+            <label for="comment_content">Введите ваш комментарий: </label>
+            <textarea name="comment_content" class="form-control" id="comment_content"> </textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" name="submit" class="btn btn-info" id="submit" value="Submit">
+        </div>
     </form>
-</div>
+    <span id="comment_message"></span>
+    <br>
+    <h3>Комментарии</h3>
+    <?php foreach ($additionalData as $value): ?>
+        <div id="display_comment"><?= $value['comment_text'] ?></div>
+    <?php endforeach; ?>

@@ -9,9 +9,7 @@ use Core\Controller;
 
 class PostController extends Controller
 {
-    /**
-     * PostController constructor.
-     */
+
     public function __construct()
     {
         parent::__construct();
@@ -33,58 +31,45 @@ class PostController extends Controller
     public function create()
     {
         $this->view->generate("create-view.php", 'templateView.php');
-        var_dump($this->model->checkCountUserArticle()[0]['COUNT(*)']);
 
     }
 
-    /**
-     * @param int $id
-     */
     public function posts(int $id)
     {
         $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id), $this->model->getPostComment($id));
+//        var_dump($this->model->getPostComment(1));
     }
 
-    /**
-     * @param int $id
-     */
     public function edit(int $id)
     {
         $this->view->generate('edit-view.php', 'templateView.php', $this->model->getPostId($id));
     }
 
-    /**
-     * @param int $id
-     */
+
     public function update(int $id)
     {
         $this->model->update($_POST['title'], $_POST['text'], $id);
     }
 
-    /**
-     * @param int $id
-     */
+
     public function delete(int $id)
     {
         $this->model->delete($id);
     }
 
-    /**
-     * @param int $id
-     * @param int|null $parent_id
-     */
-    public function addComment(int $id, int $parent_id = null)
+
+    public function addComment()
     {
-        $this->model->addComment($id, $_POST['comment'], $parent_id);
+
+        var_dump($this->model->addComment($_SESSION['id'], $_POST['articleId'], $_POST['comment_content']));
+        var_dump($_POST);
     }
 
-    /**
-     * @param int $id
-     * @return array
-     */
+
     public function userPosts(int $id)
     {
         $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getPostUserId($id));
     }
+
 
 }

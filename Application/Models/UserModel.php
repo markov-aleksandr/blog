@@ -55,9 +55,9 @@ class UserModel extends Model
                 if (password_verify($password, $userInfo[0]['password'])) {
                     $_SESSION['id'] = $userInfo[0]['id'];
                     if ($userInfo[0]['admin'] == 1) {
-                        header("Location: /posts/user/{$_SESSION[id]}/show");
+                        header("Location: /posts/user/{$_SESSION[id]}");
                     } else {
-                        header("Location: /posts/user/{$_SESSION[id]}/show");
+                        header("Location: /posts/user/{$_SESSION[id]}");
                     }
 
                 } else {

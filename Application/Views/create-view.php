@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <hr class="my-4">
-                        <button class="w-100 btn btn-primary btn-lg submit" type="submit">Добавить статью</button>
+                        <button class="w-100 btn btn-primary btn-lg submit create" type="submit">Добавить статью</button>
                     </form>
                 </div>
             </div>

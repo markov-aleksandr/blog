@@ -9,9 +9,11 @@ $router->post('/posts/store',[\Application\Controllers\PostController::class, 's
 
 
 $router->get('/posts/{id:\d+}/show',[\Application\Controllers\PostController::class, 'posts']);
-$router->get('/posts/user/{user_id:\d+}/show',[\Application\Controllers\PostController::class, 'userPosts']);
+$router->get('/posts/user/{user_id:\d+}',[\Application\Controllers\PostController::class, 'userPosts']);
 $router->get('/posts/{id:\d+}/edit',[\Application\Controllers\PostController::class, 'edit']);
-$router->post('/posts/{id:\d+}/comment/{parent_id:\d+}?',[\Application\Controllers\PostController::class, 'addComment']);
+$router->post('/posts/comment',[\Application\Controllers\PostController::class, 'addComment']);
+//$router->post('/posts/fetch',[\Application\Controllers\PostController::class, 'fetch']);
+// {id:\d+}/{parent_id:\d+}?
 //$router->post('/posts/store',[\Application\Controllers\PostController::class, 'store']);
 $router->post('/posts/update/{id:\d+}',[\Application\Controllers\PostController::class, 'update']);
 $router->get('/posts/{id:\d+}/delete',[\Application\Controllers\PostController::class, 'delete']);

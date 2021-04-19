@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="col-sm-12">
                     <label for="password" class="form-label">Введите пароль</label>
-                    <input name="password" type="text" class="form-control" id="password" required>
+                    <input name="password" type="password" class="form-control" id="password" required>
                     <div class="invalid-feedback">
                         Введите Ваш пароль.
                     </div>

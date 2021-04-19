@@ -39,7 +39,11 @@
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
-                <a class="link-secondary" href="#">Subscribe</a>
+                <?php if (isset($_SESSION['id'])): ?>
+                    <a class="link-secondary" href="/posts/user/<?= $_SESSION['id'] ?>/">Управление сатьями</a>
+                <?php else: ?>
+                <div></div>
+                <?php endif;?>
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="/">Skadi</a>
