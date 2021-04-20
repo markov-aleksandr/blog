@@ -36,8 +36,11 @@ class PostController extends Controller
 
     public function posts(int $id)
     {
-        $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id), $this->model->getPostComment($id));
-//        var_dump($this->model->getPostComment(1));
+        $data = ['id' => $id];
+        $output = ['posts' => $this->model->getPostComment($data), 'count'=>$this->model->getCountComment($id)];
+
+        $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id), $output);
+
     }
 
     public function edit(int $id)
@@ -60,9 +63,7 @@ class PostController extends Controller
 
     public function addComment()
     {
-
-        var_dump($this->model->addComment($_SESSION['id'], $_POST['articleId'], $_POST['comment_content']));
-        var_dump($_POST);
+        echo($this->model->addComment($_SESSION['id'], $_POST['articleId'], trim($_POST['comment_content'])));
     }
 
 
@@ -71,5 +72,11 @@ class PostController extends Controller
         $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getPostUserId($id));
     }
 
+    public function fetchComments (int $id) {
+        if (isset($_GET['getAllComments'])) {
+            $data = ['id' => $id];
+            print_r($this->model->getPostComment($data));
+        }
+    }
 
 }

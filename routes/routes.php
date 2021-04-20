@@ -12,7 +12,7 @@ $router->get('/posts/{id:\d+}/show',[\Application\Controllers\PostController::cl
 $router->get('/posts/user/{user_id:\d+}',[\Application\Controllers\PostController::class, 'userPosts']);
 $router->get('/posts/{id:\d+}/edit',[\Application\Controllers\PostController::class, 'edit']);
 $router->post('/posts/comment',[\Application\Controllers\PostController::class, 'addComment']);
-//$router->post('/posts/fetch',[\Application\Controllers\PostController::class, 'fetch']);
+$router->get('/posts/{id:\d+}/comments',[\Application\Controllers\PostController::class, 'fetchComments']);
 // {id:\d+}/{parent_id:\d+}?
 //$router->post('/posts/store',[\Application\Controllers\PostController::class, 'store']);
 $router->post('/posts/update/{id:\d+}',[\Application\Controllers\PostController::class, 'update']);

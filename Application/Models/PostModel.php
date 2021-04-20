@@ -4,17 +4,21 @@
 namespace Application\Models;
 
 
+use Core\Database;
 use Core\Model;
 use PDO;
 
 class PostModel extends Model
 {
+    private $database;
+
     /**
      * ArticleModel constructor.
      */
     public function __construct()
     {
         parent::__construct();
+        $this->database = new Database();
     }
 
     public function index()
@@ -90,25 +94,29 @@ class PostModel extends Model
         $createComment->bindParam(':parent_id', $parentId);
         $createComment->execute();
 //        var_dump($createComment->debugDumpParams());
-        header("Location: /posts/{$articleId}/show");
-
+//        header("Location: /posts/{$articleId}/show");
+       return $this->getCountComment($articleId);
     }
 
-
-    public function getPostComment(int $id)
+    public function getCountComment($id)
     {
-        $selectComments = $this->dataConnect->prepare('SELECT * FROM comments WHERE article_id = :id ORDER BY time DESC ');
-        $selectComments->bindParam(':id', $id);
-        $selectComments->execute();
-        $posts = $selectComments->fetchAll(PDO::FETCH_ASSOC);
-        return $posts;
-
+        $countComments = $this->dataConnect->prepare("SELECT COUNT(*) FROM comments WHERE article_id = :id");
+        $countComments->bindParam(':id', $id);
+        $countComments->execute();
+        return $countComments->fetchColumn();
     }
 
-    public function fetchComment()
+    public function getPostComment(array $data)
     {
+        $this->database->query('SELECT u.login, comment_text, article_id, time, parent_id FROM comments c join users u on u.id = c.user_id where article_id = :id ORDER BY time DESC limit 0, 20');
 
+        $this->database->bind(':id', $data['id']);
+//        $this->database->bind(':start', $data['start']);
+//        $countComments = $this->dataConnect->prepare("SELECT COUNT(*) FROM comments WHERE article_id = :id");
+//        $countComments->bindParam(':id', $data['id']);
+//        $countComments->execute();
+//        var_dump($countComments->fetchColumn());
+        return $this->database->resultSet();
     }
-
 
 }
