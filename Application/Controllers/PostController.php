@@ -75,7 +75,7 @@ class PostController extends Controller
     public function fetchComments (int $id) {
         if (isset($_GET['getAllComments'])) {
             $data = ['id' => $id];
-            print_r($this->model->getPostComment($data));
+            echo json_encode($this->model->getPostComment($data));
         }
     }
 

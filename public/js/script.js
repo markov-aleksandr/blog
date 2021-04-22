@@ -44,11 +44,15 @@ $(function () {
         $.ajax({
             url: "/posts/" + id + "/comments",
             method: "GET",
-            dataType: 'text',
+            dataType: 'JSON',
             data: {getAllComments: 1, start: start},
             success: function (response) {
-                console.log(response)
-                $('#userComments').append(response);
+                // let json = JSON.parse(response)
+                console.log(response[0])
+                // $('#usr').each(function(index, item) {
+                //     $('#table').append('<tr><td>' + item.username + '</td><td>' + item.userid + '</td></tr>');
+                // });
+                $('.comment').prepend(response[0].comment_text);
                 getAllComment(start + 20, max);
             }
         })
