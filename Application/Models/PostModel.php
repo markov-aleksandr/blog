@@ -110,23 +110,31 @@ class PostModel extends Model
         $this->database->query("SELECT COUNT(*) FROM comments WHERE article_id = :id");
         $this->database->bind(':id', $id);
 
-        return $this->database->fetchColumn();
+        return $this->database->columnCount();
     }
+
 
     public function getPostComment($id)
     {
-        $this->database->query('SELECT u.login, comment_text, article_id, time, parent_id, c.id FROM comments c join users u on u.id = c.user_id where article_id = :id ORDER BY time DESC limit 0, 20');
+
+//        $this->database->query('select * from comments');
+//        $this->database->execute();
+//        var_dump($this->database->resultSet());
+
+        $this->database->query('SELECT u.login, comment_text, article_id, time, parent_id, c.id FROM comments c join users u on u.id = c.user_id where article_id = :id ORDER BY time DESC');
         $this->database->bind(':id', $id);
+        $this->database->execute();
         $postComment = $this->database->resultSet();
-//        var_dump($postComment);
-        $parent = [];
-        $child = [];
+
+        $array = [];
         foreach ($postComment as $item) {
-            if ($item['parent_id'] == 13) {
-                $parent[$item['id']] = $item;
-                var_dump($parent);
+            if (empty($array[$item['parent_id']])) {
+                $array[$item['parent_id']] = [];
             }
+            $array[$item['parent_id']][] = $item;
         }
+
+
 
     }
 }

@@ -67,7 +67,7 @@ class Database
     //Return an array
     public function resultSet()
     {
-        $this->execute();
+//        $this->execute();
 
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -87,11 +87,11 @@ class Database
     }
 
     //Counting rows returned by a SELECT statement
-    public function fetchColumn()
+    public function columnCount()
     {
-        $this->execute();
+//        $this->execute();
 
-        return $this->statement->fetchColumn();
+        return $this->statement->columnCount();
     }
 
 
