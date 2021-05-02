@@ -2,7 +2,7 @@
 
 
 //Database params
-define('DB_HOST', 'localhost'); //Add your db host
-define('DB_USER', 'root'); // Add your DB root
-define('DB_PASS', 'root'); //Add your DB pass
-define('DB_NAME', 'blogData'); //Add your DB Name
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', 'root');
+define('DB_NAME', 'blogData');

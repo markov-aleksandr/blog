@@ -8,6 +8,7 @@
     <meta name="generator" content="Hugo 0.79.0">
     <title>Blog Template · Bootstrap v5.0</title>
     <!-- Bootstrap core CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <style>
@@ -39,11 +40,7 @@
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
-                <?php if (isset($_SESSION['id'])): ?>
-                    <a class="link-secondary" href="/posts/user/<?= $_SESSION['id'] ?>/">Управление сатьями</a>
-                <?php else: ?>
                 <div></div>
-                <?php endif;?>
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="/">Skadi</a>
@@ -57,7 +54,7 @@
                         <path d="M21 21l-5.2-5.2"/>
                     </svg>
                 </a>
-                <?php if (!isset($_SESSION['id'])): ?>
+                <?php if (!isset($_SESSION['user'])): ?>
                     <a class="btn btn-sm btn-outline-primary" href="/user/join">Sign up</a>
                     <a class="btn btn-sm btn-outline-success" href="/user/login">Log in</a>
                 <?php else: ?>
@@ -69,26 +66,31 @@
 
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
-            <?php if (isset($_SESSION['id'])): ?>
+            <?php if (isset($_SESSION['user'])): ?>
                 <a class="p-2 link-secondary" href="/posts/create">Создать</a>
+                <a class="link-secondary" href="/posts/user/<?= $_SESSION['user']['id'] ?>/">Мои посты</a>
+                <a class="link-secondary" href="/posts/user/<?= $_SESSION['user']['id'] ?>/">Личный кабинет</a>
             <?php else: ?>
                 <a class="p-2 link-secondary" href="#">Дайджест недели</a>
             <?php endif; ?>
             <!--            <a class="p-2 link-secondary" href="/"></a>-->
         </nav>
     </div>
-</div>
 
+</div>
 <div>
     <?php include '../Application/Views/' . $contentView; ?>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-        crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
 
 <script src="/js/script.js"></script>
 </body>

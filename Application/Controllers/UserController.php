@@ -5,6 +5,7 @@ namespace Application\Controllers;
 
 use Application\Models\UserModel;
 use Core\Controller;
+use Core\Mailer;
 
 class UserController extends Controller
 {
@@ -14,9 +15,12 @@ class UserController extends Controller
         $this->model = new UserModel();
     }
 
+    public function admin () {
+        $this->view->generate('admin-view.php', 'templateView.php', $this->model->getAllUserPost());
+}
+
     public function join()
     {
-        var_dump($_POST);
         $this->view->generate('sign-view.php');
     }
 
@@ -30,7 +34,7 @@ class UserController extends Controller
         $login = $_POST['login'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        return $this->model->signup($login, $email, $password);
+        echo($this->model->signup($login, $email, $password));
     }
 
 
@@ -45,6 +49,20 @@ class UserController extends Controller
         unset($_SESSION['session_username']);
         session_destroy();
         header("location: /");
+    }
+
+    public function userActivation(string $hash)
+    {
+        var_dump($hash);
+        var_dump($this->model->activation($hash));
+    }
+
+    public function sendSecurityCode($hash)
+    {
+        $user_email = "uioptoday@gmail.com";
+        $name = "Александр Державский";
+        $mailer = new Mailer();
+        $send = $mailer->sendSecurityCodeEmail($user_email, $name, $hash);
     }
 
 

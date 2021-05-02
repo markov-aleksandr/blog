@@ -3,8 +3,8 @@
         <h2 id="as">Зарегестрироваться</h2>
     </div>
     <!--    <h4 class="mb-4 text-center">Чтобы комфортнее пользоваться ресурсом, вы можете зарегистрироваться</h4>-->
-    <form id="signup" class="needs-validation" action="/user/signup" method="post">
-        <div id="resultForm" class="resultForm"></div>
+<!--    <form id="signup">-->
+        <div id="msgbox"></div>
 
         <!--            <div class="row g-3">-->
         <div class="col-12">
@@ -12,7 +12,7 @@
             <input name="login" type="text" class="form-control" id="login" required>
             <div class="col-12">
                 <label for="email" class="form-label">Введите Ваш email</label>
-                <input name="email" type="text" class="form-control" id="email" required>
+                <input name="email" type="email" class="form-control" id="email" required>
 
                 <div class="col-sm-12">
                     <label for="password" class="form-label">Введите пароль</label>
@@ -21,6 +21,6 @@
             </div>
         </div>
         <hr class="my-4">
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Зарегестрироваться</button>
-    </form>
+        <button class="w-100 btn btn-primary btn-lg" id="signupSubmit" type="submit">Зарегестрироваться</button>
+<!--    </form>-->
 </div>

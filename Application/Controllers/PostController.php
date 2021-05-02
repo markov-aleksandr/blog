@@ -25,22 +25,23 @@ class PostController extends Controller
     {
         $title = $_POST['title'];
         $text = $_POST['text'];
-        return json_encode($this->model->store($title, $text));
+
+        echo json_encode($this->model->store($title, $text, $_SESSION['user']['id']));
     }
 
     public function create()
     {
-        $this->view->generate("create-view.php", 'templateView.php');
-
+//        var_dump($this->model->countUserPosts($_SESSION['id']));
+        $data = ['count' => $this->model->countUserPosts($_SESSION['user']['id']), 'posts' => $this->model->getPostUserId($_SESSION['user']['id'])];
+        $this->view->generate("create-view.php", 'templateView.php', $data);
     }
 
     public function posts(int $id)
     {
-        $data = ['id' => $id];
-        $output = ['posts' => $this->model->getPostComment($data), 'count'=>$this->model->getCountComment($id)];
+//        $data = ['id' => $id];
+        $output = ['posts' => $this->model->getPostComment($id), 'count' => $this->model->getCountComment($id)];
 
         $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id), $output);
-
     }
 
     public function edit(int $id)
@@ -63,7 +64,8 @@ class PostController extends Controller
 
     public function addComment()
     {
-        echo($this->model->addComment($_SESSION['id'], $_POST['articleId'], trim($_POST['comment_content'])));
+
+        echo($this->model->addComment($_SESSION['user']['id'], $_POST['articleId'], trim($_POST['comment_content']), ($_POST['parentId'] == 0 ? null : $_POST['parentId'])));
     }
 
 
@@ -72,10 +74,11 @@ class PostController extends Controller
         $this->view->generate('user-article-view.php', 'templateView.php', $this->model->getPostUserId($id));
     }
 
-    public function fetchComments (int $id) {
+    public function fetchComments(int $id)
+    {
         if (isset($_GET['getAllComments'])) {
-            $data = ['id' => $id];
-            echo json_encode($this->model->getPostComment($data));
+//            $data = ['id' => $id];
+            echo json_encode($this->model->getPostComment($id));
         }
     }
 

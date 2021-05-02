@@ -11,7 +11,7 @@ $router->post('/posts/store',[\Application\Controllers\PostController::class, 's
 $router->get('/posts/{id:\d+}/show',[\Application\Controllers\PostController::class, 'posts']);
 $router->get('/posts/user/{user_id:\d+}',[\Application\Controllers\PostController::class, 'userPosts']);
 $router->get('/posts/{id:\d+}/edit',[\Application\Controllers\PostController::class, 'edit']);
-$router->post('/posts/comment',[\Application\Controllers\PostController::class, 'addComment']);
+$router->post('/posts/comments',[\Application\Controllers\PostController::class, 'addComment']);
 $router->get('/posts/{id:\d+}/comments',[\Application\Controllers\PostController::class, 'fetchComments']);
 // {id:\d+}/{parent_id:\d+}?
 //$router->post('/posts/store',[\Application\Controllers\PostController::class, 'store']);
@@ -22,7 +22,8 @@ $router->get('/user/logout', [\Application\Controllers\UserController::class, 'l
 $router->post('/user/authorize', [\Application\Controllers\UserController::class, 'authorize']);
 $router->get('/user/login', [\Application\Controllers\UserController::class, 'login']);
 $router->get('/user/join', [\Application\Controllers\UserController::class, 'join']);
-//$router->post('/user/join', [\Application\Controllers\UserController::class, 'signup']);
+$router->get('/user/accountActivation/{hash}', [\Application\Controllers\UserController::class, 'userActivation']);
+$router->get('/user/admin', [\Application\Controllers\UserController::class, 'admin']);
 $router->post('/user/signup', [\Application\Controllers\UserController::class, 'signup']);
 
 

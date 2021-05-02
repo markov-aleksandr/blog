@@ -2,20 +2,27 @@
 
 namespace Application\Models;
 
+use Core\Database;
+use Core\Mailer;
 use Core\Model;
 use PDO;
 
 class UserModel extends Model
 {
+    private $database;
+
     public function __construct()
     {
         parent::__construct();
+        $this->database = new Database();
     }
+
 
     /**
      * @param $login
      * @param $email
      * @param $password
+     * @return string|void
      */
     public function signup($login, $email, $password)
     {
@@ -23,16 +30,30 @@ class UserModel extends Model
             $validationEmail = $this->dataConnect->prepare('SELECT COUNT(*)FROM users WHERE email=:email');
             $validationEmail->bindParam(":email", $email);
             $validationEmail->execute();
+            $validationLogin = $this->dataConnect->prepare('SELECT COUNT(*)FROM users WHERE login =:login');
+            $validationLogin->bindParam(":login", $login);
+            $validationLogin->execute();
             if ($validationEmail->fetchColumn() == '0') {
-                $password = password_hash($password, PASSWORD_DEFAULT);
-                $insertRegistrationData = $this->dataConnect->prepare('INSERT INTO users(login, email, password) VALUES (:login, :email, :password)');
-                $insertRegistrationData->bindParam(":email", $email);
-                $insertRegistrationData->bindParam(":password", $password);
-                $insertRegistrationData->bindParam(':login', $login);
-                $insertRegistrationData->execute();
+                if ($validationLogin->fetchColumn() == '0') {
+//                    $password = ;
+                    $hash = md5($login);
+                    $insertRegistrationData = $this->dataConnect->prepare('INSERT INTO users(login, email, password, hash) VALUES (:login, :email, :password, :hash)');
+                    $insertRegistrationData->bindParam(":email", $email);
+                    $insertRegistrationData->bindValue(":password", password_hash($password, PASSWORD_DEFAULT));
+                    $insertRegistrationData->bindParam(':login', $login);
+                    $insertRegistrationData->bindParam(':hash', $hash);
+                    $insertRegistrationData->execute();
+                    echo 'Поздравляю с успешной регистрацией';
+
+                    return $this->sendSecurityCode($email, $login, $hash);
+                } else {
+                    return 'Пользователь с таким логином уже существует.';
+                }
+            } else {
+                return 'Пользователь с такой почтой уже существует.';
             }
         } else {
-            return false;
+            return 'Все поля должны быть заполнены';
         }
     }
 
@@ -41,7 +62,8 @@ class UserModel extends Model
      * @param $password
      * @return string
      */
-    public function login($email, $password)
+    public
+    function login($email, $password)
     {
         if (!empty($email) && !empty($password)) {
             $existenceUser = $this->dataConnect->prepare('SELECT COUNT(*) FROM users WHERE email=:email');
@@ -51,24 +73,51 @@ class UserModel extends Model
                 $userInfo = $this->dataConnect->prepare('SELECT * FROM `users` WHERE email=:email');
                 $userInfo->bindParam(":email", $email);
                 $userInfo->execute();
-                $userInfo = $userInfo->fetchAll(PDO::FETCH_ASSOC);
-                if (password_verify($password, $userInfo[0]['password'])) {
-                    $_SESSION['id'] = $userInfo[0]['id'];
-                    if ($userInfo[0]['admin'] == 1) {
-                        header("Location: /posts/user/{$_SESSION[id]}");
+                $userInfo = $userInfo->fetch(PDO::FETCH_ASSOC);
+                var_dump($userInfo);
+                if (password_verify($password, $userInfo['password'])) {
+                    $_SESSION['user'] = ['id' => $userInfo['id'], 'admin' => $userInfo['admin'], 'active' => $userInfo['active']];
+                    if ($userInfo['admin'] == 1) {
+                        header("Location: /user/admin");
                     } else {
-                        header("Location: /posts/user/{$_SESSION[id]}");
+                        header("Location: /posts/user/{$_SESSION['user']['id']}");
                     }
 
                 } else {
-                    $error = 'Вы ввели не правильный пароль';
-                    return $error;
+                    return 'Вы ввели не правильный пароль';
                 }
             } else {
-                $error = 'Такого пользователя нет.';
-                return $error;
+                return 'Такого пользователя нет.';
             }
         }
     }
+
+    public function activation($hash)
+    {
+        $this->database->query("SELECT * FROM `users` WHERE `hash` = :hash");
+        $this->database->bind(':hash', $hash);
+        $info = $this->database->singleSet();
+        if ($info) {
+            $this->database->query('UPDATE `users` SET `active`= 1 WHERE id = :id');
+            $this->database->bind(':id', $info['id']);
+            $this->database->execute();
+            return $this->database->error();
+        }
+
+    }
+
+    public function sendSecurityCode($user_email, $name, $hash)
+    {
+        $mailer = new Mailer();
+        $hash = 'blog.com:8080/user/accountActivation/' . $hash;
+        $send = $mailer->sendSecurityCodeEmail($user_email, $name, $hash);
+    }
+
+    public function getAllUserPost()
+    {
+        $this->database->query('SELECT u.login, a.title, a.text, a.date_create FROM users u JOIN articles a ON u.id = a.user_id');
+        return $this->database->resultSet();
+    }
+//
 
 }

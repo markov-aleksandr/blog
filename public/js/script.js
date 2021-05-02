@@ -1,109 +1,131 @@
-// $('button.ans__comment').click(function (e) {
-//     let $clicked_el = $(e.currentTarget);
-//     let clicked_class = e.currentTarget.className;
-//     // alert(this.id)
-//     let id = this.id
-//     console.log(id)
-//     $.ajax({
-//         type: "POST",
-//         url: "/posts/comment",
-//         data: {id: id, parrent_id: parrent},
-//         success: function (result) {
-//             console.log(result)
-//         }
-//     });
-// });
 $(function () {
-    let id = 1;
+    createPost();
 
 
-    $("#addComment").on('click', function () {
-        let comment = $("#commentField").val();
-        let countComment = $('#countComment').val();
-        console.log(countComment)
+    $('#signupSubmit').on('click', function () {
+        let login = $("#login").val();
+        let email = $("#email").val();
+        let password = $("#password").val();
 
         $.ajax({
-            url: "/posts/comment",
-            method: "POST",
+            url: '/user/signup',
+            method: 'POST',
             dataType: 'text',
             data: {
-                comment_content: comment,
-                articleId: 1
+                login: login,
+                email: email,
+                password: password
             },
             success: function (response) {
-                $("#countComment").html(response);
-            }
-        })
-        getAllComment(0, countComment)
-    })
+                if (response === 'Поздравляю с успешной регистрацией') {
+                    $(location).attr('href', '/user/login')
+                }
+                $('#msgbox').css('display', 'block').html(response);
+                $('#password').val('');
 
-    function getAllComment(start, max) {
-        if (start > max) {
-            return;
-        }
-        $.ajax({
-            url: "/posts/" + id + "/comments",
-            method: "GET",
-            dataType: 'JSON',
-            data: {getAllComments: 1, start: start},
-            success: function (response) {
-                // let json = JSON.parse(response)
-                console.log(response[0])
-                // $('#usr').each(function(index, item) {
-                //     $('#table').append('<tr><td>' + item.username + '</td><td>' + item.userid + '</td></tr>');
-                // });
-                $('.comment').prepend(response[0].comment_text);
-                getAllComment(start + 20, max);
             }
         })
+
+
+
+        let id = $(".articleId").attr('id');
+
+        let commentId = 0;
+        $('.reply').on('click', function () {
+            reply(this);
+            commentId = $(this).attr('id');
+            console.log(commentId)
+        })
+        $("#addComment, #addReply").on('click', function () {
+            let comment;
+            if (!isReply) {
+                comment = $("#commentField").val();
+            } else {
+                comment = $("#replyComment").val();
+            }
+
+            let countComment = $('#countComment').val();
+            $.ajax({
+                url: "/posts/comments",
+                method: "POST",
+                dataType: 'text',
+                data: {
+                    comment_content: comment,
+                    articleId: id,
+                    parentId: commentId
+                },
+                success: function (response) {
+                    let json = JSON.parse(response)
+                    $("#countComment").html(json['count']);
+                    if (!isReply) {
+                        $("#commentField").val('');
+                        successFetchComment(json['comments']);
+                    } else {
+                        $('.rowReply').hide();
+                        $('.rowReply').val('');
+                        $('.replies').append(` <div class="comment">
+                            <div class="user"><b>${json['login']}</b> <span class="time">2019-07-15</span></div>
+                            <div class="userComment"></div>
+                        </div>`)
+
+                    }
+
+
+                }
+            })
+            // getAllComment(0, countComment)
+        })
+
+        // function getAllComment(start, max) {
+        //     if (start > max) {
+        //         return;
+        //     }
+        //     $.ajax({
+        //         url: "/posts/" + id + "/comments",
+        //         method: "GET",
+        //         dataType: 'JSON',
+        //         data: {getAllComments: 1, start: start},
+        //         success: function (response) {
+        //             successFetchComment(response);
+        //         }
+        //     })
+        // }
+
+        function successFetchComment(response) {
+            $('.userComments').prepend(`<div class="comment">
+                    <div class="user"><b>${response[0]['login']}</b> <span class="time">${response[0]['time']}</span></div>
+                    <div class="userComment">${response[0]['comment_text']}</div>
+                    <div class="reply" id="${response[0]['id']}"><a href="javascript:void(0)">ответить</a></div>`)
+        }
+
+    })
+    let isReply = false;
+
+    function reply(caller) {
+        $('.rowReply').insertAfter($(caller))
+        $('.rowReply').show();
     }
 
+    console.log(isReply)
+
+
+    function createPost() {
+        $('button.create').on('click', function (e) {
+            e.preventDefault();
+            let title = $('.title').val();
+            let text = $('.text').val();
+            $.ajax({
+                type: "POST",
+                url: "/posts/store",
+                data: {title: title, text: text},
+                success: function (result) {
+                    let response = JSON.parse(result);
+                    $('.count').html(response['count']);
+                    console.log(response)
+                }
+            });
+            $('.title').val('');
+            $('.text').val('');
+        })
+    }
 })
-//
-// function getAllComment(start, max) {
-//     $.ajax({
-//         url: '/posts/' + id + '/show',
-//         method: 'POST',
-//         dataType: 'text',
-//     })
-//
-// }
-//
-//
-// function createPost() {
-//     $('button.create').on('click', function (e) {
-//         e.preventDefault();
-//         let title = $('.title').val();
-//         let text = $('.text').val();
-//         $.ajax({
-//             type: "POST",
-//             url: "/posts/store",
-//             data: {title: title, text: text},
-//             success: function (result) {
-//                 console.log(result)
-//             }
-//         });
-//         $('.title').val('');
-//         $('.text').val('');
-//     })
-// }
-//
-// $('#comment_form').on('submit', function (event) {
-//     event.preventDefault();
-//     let data_form = $("#comment_content").val();
-//     let articleId = $('.post_id').attr('id')
-//     console.log(data_form, articleId)
-//     $.ajax({
-//         url: "/posts/comment",
-//         method: "POST",
-//         data: {comment_content: data_form, articleId: articleId},
-//         dataType: "JSON",
-//         success: function () {
-//             if (data.error != '') {
-//                 $('#comment_form')[0].reset();
-//                 $('#comment_message').html(data.error);
-//             }
-//         }
-//     })
-//     $('#comment_content').val('');
-// })

@@ -4,6 +4,7 @@
 namespace Core;
 
 use PDO;
+
 require '../config.php';
 
 class Database
@@ -67,19 +68,35 @@ class Database
     public function resultSet()
     {
         $this->execute();
+
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //Return a specific row as an object
-    public function single()
+    public function singleSet()
     {
         $this->execute();
-        return $this->statement->fetch(PDO::FETCH_OBJ);
+
+        return $this->statement->fetch(PDO::FETCH_ASSOC);
     }
 
     //Get's the row count
     public function rowCount()
     {
         return $this->statement->rowCount();
+    }
+
+    //Counting rows returned by a SELECT statement
+    public function fetchColumn()
+    {
+        $this->execute();
+
+        return $this->statement->fetchColumn();
+    }
+
+
+    public function error()
+    {
+        return $this->statement->errorInfo();
     }
 }

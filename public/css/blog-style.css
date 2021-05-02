@@ -161,3 +161,43 @@ h1, h2, h3, h4, h5, h6 {
 #ansComment textarea{
     visibility: hidden;
 }
+
+ .user {
+     font-weight: bold;
+     color: black;
+ }
+
+.time {
+    color: gray;
+}
+
+.userComment {
+    color: #000;
+}
+
+.comment {
+    margin-top: 10px;
+}
+
+.replies {
+    margin-left: 20px;
+}
+
+
+.link{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#msgbox{
+    text-align: center;
+    color: #664d03;
+    border-radius: 10px;
+    width: auto;
+    padding: 25px;
+    background-color: #fff3cd;
+    margin-bottom: 10px;
+    display: none;
+}
+
