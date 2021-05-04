@@ -1,11 +1,39 @@
 $(function () {
+    $.ajax({
+        url: '/posts/'+ 1 + '/comments',
+        method: 'GET',
+        dataType: 'JSON',
+        success: function (response) {
+            renderAllComment(response);
+
+        }
+    })
+
     createPost();
+
 
 
     $('#signupSubmit').on('click', function () {
         let login = $("#login").val();
         let email = $("#email").val();
         let password = $("#password").val();
+
+        $(".signup").validate({
+            rules: {
+                login: "required",
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                name: "Please specify your name",
+                email: {
+                    required: "We need your email address to contact you",
+                    email: "Your email address must be in the format of name@domain.com"
+                }
+            }
+        });
 
         $.ajax({
             url: '/user/signup',
@@ -129,3 +157,26 @@ $(function () {
         })
     }
 })
+
+function renderAllComment (array, parent_id = 0) {
+    // console.log(array[parent_id])
+    if (array[parent_id] === undefined){
+        return ;
+    }
+ let keyCount = Object.keys(array).length
+    // console.log(keyCount)
+    // console.log(array)
+
+    for(i = 0; i < keyCount-1; i++) {
+        console.log(array[i])
+        if (array[parent_id][i] !== undefined) {
+            $('.userComments').prepend(`<div class="comment">
+                    <div class="user"><b>${array[parent_id][i]['login']}</b> <span class="time">${array[parent_id][i]['time']}</span></div>
+                    <div class="userComment">${array[parent_id][i]['comment_text']}</div>
+                    <div class="reply" id="${array[parent_id][i]['id']}"><a href="javascript:void(0)">ответить</a></div>`)
+            renderAllComment(array, array[parent_id][i]['id']);
+        }
+
+
+    }
+}

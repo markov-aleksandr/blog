@@ -114,27 +114,60 @@ class PostModel extends Model
     }
 
 
-    public function getPostComment($id)
+    public function getPostComment(int $id)
     {
+        $comments = $this->dataConnect->prepare('SELECT u.login, comment_text, article_id, time, parent_id, c.id FROM comments c join users u on u.id = c.user_id where article_id = :id ORDER BY time DESC');
+        $comments->bindValue(':id', $id);
+        $comments->execute();
+        $postComment = $comments->fetchAll(PDO::FETCH_ASSOC);
 
-//        $this->database->query('select * from comments');
-//        $this->database->execute();
-//        var_dump($this->database->resultSet());
+        if ($postComment != null) {
+            $references = array();
+            $tree = array();
+            foreach ($postComment as $id => &$node) {
+                // Use id as key to make a references to the tree and initialize it with node reference.
+                $references[$node['id']] = &$node;
 
-        $this->database->query('SELECT u.login, comment_text, article_id, time, parent_id, c.id FROM comments c join users u on u.id = c.user_id where article_id = :id ORDER BY time DESC');
-        $this->database->bind(':id', $id);
-        $this->database->execute();
-        $postComment = $this->database->resultSet();
-
-        $array = [];
-        foreach ($postComment as $item) {
-            if (empty($array[$item['parent_id']])) {
-                $array[$item['parent_id']] = [];
+                // Add empty array to hold the children/subcategories
+                $node['children'] = array();
+//
+                // Get your root node and add this directly to the tree
+                if ($node['parent_id'] == 0) {
+                    $tree[$node['id']] = &$node;
+                } else {
+                    // Add the non-root node to its parent's references
+                    $references[$node['parent_id']]['children'][$node['id']] = &$node;
+                }
             }
-            $array[$item['parent_id']][] = $item;
+//            return ($references);
+
+//            print_r($tree);
+
         }
-
-
+//        $array = [];
+//        foreach ($postComment as $item) {
+//            if (empty($array[$item['parent_id']])) {
+//                $array[$item['parent_id']] = [];
+//                $array['child'] = $item['id'];
+//            }
+//            $array[$item['parent_id']][] = $item;
+//        }
+////        var_dump($array);]
 
     }
+
+    public function foo($arr, $level=0) {
+        $prepend = str_repeat(' ', $level); // <- the $level thingy is not necessary; it's only in here to get a bit prettier output
+
+        echo $prepend, '<ul>', PHP_EOL;
+        foreach($arr as $comment) {
+            echo $prepend, '    <li>', $comment['time'], ' ', htmlentities($comment['comment_text']), PHP_EOL;
+            if ( !empty($comment['children']) ) {
+                $this->foo($comment['children'], $level+1); // recurse into the next level
+            }
+            echo $prepend, '    </li>', PHP_EOL;
+        }
+        echo $prepend, '</ul>', PHP_EOL;
+    }
+
 }
