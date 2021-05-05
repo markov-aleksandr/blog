@@ -39,8 +39,8 @@ class PostController extends Controller
     public function posts(int $id)
     {
 //        $data = ['id' => $id];
-        $output = ['posts' => $this->model->getPostComment($id), 'count' => $this->model->getCountComment($id)];
-$array = $this->model->getPostComment(1);
+//        $output = ['posts' => $this->model->getPostComment($id), 'count' => $this->model->getCountComment($id)];
+//$array = $this->model->getPostComment(1);
 //        var_dump($this->model->renderAllComment($array));
 
         $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id), $this->model->getPostComment($id));

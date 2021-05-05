@@ -18,22 +18,22 @@ $(function () {
         let email = $("#email").val();
         let password = $("#password").val();
 
-        $(".signup").validate({
-            rules: {
-                login: "required",
-                email: {
-                    required: true,
-                    email: true
-                }
-            },
-            messages: {
-                name: "Please specify your name",
-                email: {
-                    required: "We need your email address to contact you",
-                    email: "Your email address must be in the format of name@domain.com"
-                }
-            }
-        });
+        // $(".signup").validate({
+        //     rules: {
+        //         login: "required",
+        //         email: {
+        //             required: true,
+        //             email: true
+        //         }
+        //     },
+        //     messages: {
+        //         name: "Please specify your name",
+        //         email: {
+        //             required: "We need your email address to contact you",
+        //             email: "Your email address must be in the format of name@domain.com"
+        //         }
+        //     }
+        // });
 
         $.ajax({
             url: '/user/signup',
