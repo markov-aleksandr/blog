@@ -69,7 +69,7 @@
             <?php if (isset($_SESSION['user'])): ?>
                 <a class="p-2 link-secondary" href="/posts/create">Создать</a>
                 <a class="link-secondary" href="/posts/user/<?= $_SESSION['user']['id'] ?>/">Мои посты</a>
-                <a class="link-secondary" href="/posts/user/<?= $_SESSION['user']['id'] ?>/">Личный кабинет</a>
+                <a class="link-secondary" href="/user/admin/">Личный кабинет</a>
             <?php else: ?>
                 <a class="p-2 link-secondary" href="#">Дайджест недели</a>
             <?php endif; ?>

@@ -43,7 +43,7 @@ class PostController extends Controller
 //$array = $this->model->getPostComment(1);
 //        var_dump($this->model->renderAllComment($array));
 
-        $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id), $this->model->getPostComment($id));
+        $this->view->generate('article-view.php', 'templateView.php', $this->model->getPostId($id), $this->model->commentView($this->model->getPostComment($id)));
     }
 
     public function edit(int $id)
@@ -66,8 +66,8 @@ class PostController extends Controller
 
     public function addComment()
     {
-
-        echo($this->model->addComment($_SESSION['user']['id'], $_POST['articleId'], trim($_POST['comment_content']), ($_POST['parentId'] == 0 ? null : $_POST['parentId'])));
+        var_dump($_POST);
+        echo($this->model->addComment($_SESSION['user']['id'], $_POST['articleId'], trim($_POST['comment_content']), $_POST['parentId']));
     }
 
 
@@ -78,7 +78,7 @@ class PostController extends Controller
 
     public function fetchComments(int $id)
     {
-        echo json_encode($this->model->getPostComment($id));
+        echo $this->model->commentView($this->model->getPostComment($id));
 //        if (isset($_GET['getAllComments'])) {
 ////            $data = ['id' => $id];
 //            echo json_encode($this->model->getPostComment($id));

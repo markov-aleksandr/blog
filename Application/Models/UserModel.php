@@ -116,6 +116,7 @@ class UserModel extends Model
     public function getAllUserPost()
     {
         $this->database->query('SELECT u.login, a.title, a.text, a.date_create FROM users u JOIN articles a ON u.id = a.user_id');
+
         return $this->database->resultSet();
     }
 //
